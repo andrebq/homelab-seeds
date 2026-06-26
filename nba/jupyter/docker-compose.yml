@@ -1,0 +1,15 @@
+services:
+  jupyter:
+    image: homelab/jupyter
+    ports:
+      - "8888:8888"
+    volumes:
+      - jupyter-data:/var/jupyter-data
+    environment:
+      - JUPYTER_TOKEN=${JUPYTER_TOKEN}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped
+
+volumes:
+  jupyter-data:

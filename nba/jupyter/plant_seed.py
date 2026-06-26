@@ -60,6 +60,10 @@ def main() -> None:
     else:
         ssl_verify = ca_cert
 
+    image_name = os.environ.get("IMAGE_NAME")
+    if not image_name:
+        sys.exit("error: IMAGE_NAME env var is required")
+
     api_key = decrypt(API_KEY_AGE)
     token = decrypt(TOKEN_AGE)
     compose_content = COMPOSE_FILE.read_text()
@@ -70,7 +74,10 @@ def main() -> None:
     payload = {
         "name": stack_name,
         "stackFileContent": compose_content,
-        "env": [{"name": "JUPYTER_TOKEN", "value": token}],
+        "env": [
+            {"name": "JUPYTER_TOKEN", "value": token},
+            {"name": "IMAGE_NAME", "value": image_name},
+        ],
     }
 
     resp = requests.post(url, params=params, headers=headers, json=payload, verify=ssl_verify)

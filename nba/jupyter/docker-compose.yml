@@ -1,6 +1,7 @@
 services:
   jupyter:
-    image: homelab/jupyter
+    image: ${IMAGE_NAME}
+    pull_policy: never
     ports:
       - "8888:8888"
     volumes:

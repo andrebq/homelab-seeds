@@ -35,7 +35,7 @@ COMPOSE_FILE = Path(__file__).resolve().parent / "docker-compose.yml"
 
 def decrypt(path: Path) -> str:
     result = subprocess.run(
-        [str(SECRETS), "decrypt", "-i", str(path)],
+        ["uv", "run", "--script", str(SECRETS), "decrypt", "-i", str(path)],
         capture_output=True,
     )
     if result.returncode != 0:
